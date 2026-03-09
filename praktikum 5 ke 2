@@ -1,0 +1,40 @@
+def merge_count(arr):
+
+    if len(arr) <= 1:
+        return arr, 0
+
+    mid = len(arr)//2
+
+    left, inv_left = merge_count(arr[:mid])
+    right, inv_right = merge_count(arr[mid:])
+
+    i = j = inv = 0
+    merged = []
+
+    while i < len(left) and j < len(right):
+
+        if left[i] <= right[j]:
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            inv += len(left) - i
+            j += 1
+
+    merged += left[i:]
+    merged += right[j:]
+
+    return merged, inv + inv_left + inv_right
+
+
+def countInversionsSmart(arr):
+    _, inv = merge_count(arr)
+    return inv
+
+
+arr = [2, 4, 1, 3]
+
+hasil = countInversionsSmart(arr)
+
+print("Array:", arr)
+print("Jumlah inversion:", hasil)
